@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{plantilla/plantilla}">
+<head>
+    <title>Agregar Receta</title>
+</head>
+<body>
+    <div layout:fragment="espaciocontenidohtml">
+        <h1>Agregar Nueva Receta</h1>
+        <form th:action="@{/insertar_receta}" th:object="${receta}" method="post">
+            <div>
+                <label for="titulo">Título:</label>
+                <input class="form-control input-sm" type="text" id="titulo" th:field="*{titulo}" required/>
+            </div>
+            <div>
+                <label for="ingredientes">Ingredientes:</label>
+                <textarea class="form-control" id="ingredientes" th:field="*{ingredientes}" required></textarea>
+            </div>
+            <div>
+                <label for="pasos">Pasos de Preparación:</label>
+                <textarea class="form-control" id="pasos" th:field="*{pasos}" required></textarea>
+            </div>
+            <div>
+                <label for="categoria">Categoría:</label>
+                <select class="form-control" id="categoria" th:field="*{categoria}" required>
+                    <option th:each="categoria : ${listarCategoria}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+                </select>
+            </div>
+            <div>
+                <label for="categoria">Calificacion:</label>
+                <select class="form-control" id="calificacion" th:field="*{calificaciones}" required>
+                    <option th:each="calificaciones : ${listarCalificacion}" th:value="${calificaciones.id}" th:text="${calificaciones.puntuacion}"></option>
+                </select>
+            </div>
+             <input class="form-control input-sm" type="hidden"  th:field="*{id}" />
+            <div>
+                <button class="btn btn-success" type="submit">Agregar Receta</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html 
+	lang="es" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{plantilla/plantilla}"
+>
+<head>
+    <title>Lista Recetas</title>
+    <script>
+        function buscarReceta() {
+            var buscarTexto = document.getElementById("BuscarTexto").value;
+            var url = "/buscar_receta/" + encodeURIComponent(buscarTexto);
+            window.location.href = url;
+        }
+    </script>
+</head>
+
+<body>
+<!-- Pre-loader start -->
+<div layout:fragment="espaciocontenidohtml">
+       <div class="pcoded-content">
+           <!-- Page-header start -->
+           <div class="page-header">
+               <div class="page-block">
+                   <div class="row align-items-center">
+                       <div class="col-md-8">
+                           <div class="page-header-title">
+                               <h5 class="m-b-10">Recetas</h5>
+                           </div>
+                       </div>
+                       
+                   </div>
+               </div>
+           </div>
+           <!-- Page-header end -->
+           <div class="pcoded-inner-content">
+               <div class="main-body">
+                   <div class="page-wrapper">
+                       <div class="page-body">
+                           <div class="row">
+                               <div class="col-sm-12">
+                                   <div class="card">
+                                       <div class="card-header">
+                                            
+                                            <div class="row">
+                                                <div class="col-sm col-md">
+                                                    Buscar Por Titulo 
+                                                    <input type="text" id="BuscarTexto" class="form-control input-sm" >
+                                                </div>
+                                                <div class="col-sm col-md-2">
+                                                    
+                                                    <a href="javascript:void(0);" onclick="buscarReceta()" class="btn btn-primary">
+                                                        <i class="fa fa-search"></i> Buscar
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                       </div>
+                                       <div class="card-block">
+                                           <div class="card-body">
+                                            <a title="Nuevo receta" th:href="@{/receta_nuevo}" class="btn btn-success">
+                                                <i class="fa fa-plus"></i> Nuevo
+                                            </a>
+                                        	<table id="example" class="table table-striped" style="width:100%">
+										        <thead>
+										            <tr>
+										                <th>#</th>
+										                <th>TITULO</th>
+										                <th>INGREDIENTES</th>
+										                <th>PASOS</th>
+										                <th>CATEGORIA</th>
+										                <th>PUNTUACION</th>
+										                <th></th>
+										            </tr>
+										        </thead>
+										        <tbody>
+										            
+										                
+										            <tr th:each="receta:${lista}">
+										                <td th:text="${receta.id}"></td>
+										                <td th:text="${receta.titulo}"></td>
+										                <td th:text="${receta.ingredientes}"></td>
+										                <td th:text="${receta.pasos}"></td>
+										                <td th:text="${receta.categoria.nombre}"></td>
+										                <td th:text="${receta.calificaciones.puntuacion}"></td>
+										                
+										                <td>
+										                	<a th:href="@{/editar_receta/}+${receta.id}" class="btn btn-warning">
+										                		<i class="fa fa-pencil"></i> Editar
+										                	</a>
+										                	<a th:href="@{/eliminar_receta/}+${receta.id}" class="btn btn-danger">
+										                		<i class="ti-trash"></i> Eliminar
+										                	</a>
+										                </td>
+										            </tr>
+										            
+										        </tbody>
+				        
+				    						</table>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+                
+         
+</div>
+
+
+</body>
+
+</html>
