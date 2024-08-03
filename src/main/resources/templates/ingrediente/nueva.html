@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{plantilla/plantilla}">
+<head>
+    <title>Agregar Ingrediente</title>
+</head>
+<body>
+    <div layout:fragment="espaciocontenidohtml">
+        <h1>Agregar Nueva Ingrediente</h1>
+        <form th:action="@{/insertar_ingrediente}" th:object="${nuevoIngrediente}" method="post">
+            <div>
+                <label for="titulo">Nombre:</label>
+                <input class="form-control input-sm" type="text" id="titulo" th:field="*{nombre}" required/>
+            </div>
+           
+             <input class="form-control input-sm" type="hidden"  th:field="*{id}" />
+            <div class="pt-5">
+                <button class="btn btn-success" type="submit">Agregar Ingrediente</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

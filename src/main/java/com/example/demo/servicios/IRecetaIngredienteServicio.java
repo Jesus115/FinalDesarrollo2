@@ -8,7 +8,7 @@ import com.example.demo.modelo.RecetaIngrediente;
 
 @Service
 public interface IRecetaIngredienteServicio {
-	public RecetaIngrediente buscarRecIngredienteId(int id);
+	public List<RecetaIngrediente> buscarRecIngredienteId(int id);
 	public boolean eliminarRecIngredienteId(int id);
 	public void insertarRecIngrediente(RecetaIngrediente nuevo);
 	public List<RecetaIngrediente> listarRecIngrediente();

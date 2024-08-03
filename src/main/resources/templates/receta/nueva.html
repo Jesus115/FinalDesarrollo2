@@ -1,43 +1,91 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-layout:decorate="~{plantilla/plantilla}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{plantilla/plantilla}">
 <head>
     <title>Agregar Receta</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <div layout:fragment="espaciocontenidohtml">
-        <h1>Agregar Nueva Receta</h1>
-        <form th:action="@{/insertar_receta}" th:object="${receta}" method="post">
-            <div>
+    <div layout:fragment="espaciocontenidohtml" class="container mt-5">
+        <h1 class="mb-4">Agregar Nueva Receta</h1>
+        <form th:action="@{/insertar_receta}" th:object="${receta}" method="post" class="mb-4">
+            <div class="form-group">
                 <label for="titulo">Título:</label>
-                <input class="form-control input-sm" type="text" id="titulo" th:field="*{titulo}" required/>
+                <input class="form-control" type="text" id="titulo" th:field="*{titulo}" required/>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="ingredientes">Ingredientes:</label>
                 <textarea class="form-control" id="ingredientes" th:field="*{ingredientes}" required></textarea>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="pasos">Pasos de Preparación:</label>
                 <textarea class="form-control" id="pasos" th:field="*{pasos}" required></textarea>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="categoria">Categoría:</label>
                 <select class="form-control" id="categoria" th:field="*{categoria}" required>
                     <option th:each="categoria : ${listarCategoria}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
                 </select>
             </div>
-            <div>
-                <label for="categoria">Calificacion:</label>
+            <div class="form-group">
+                <label for="calificacion">Calificación:</label>
                 <select class="form-control" id="calificacion" th:field="*{calificaciones}" required>
                     <option th:each="calificaciones : ${listarCalificacion}" th:value="${calificaciones.id}" th:text="${calificaciones.puntuacion}"></option>
                 </select>
             </div>
-             <input class="form-control input-sm" type="hidden"  th:field="*{id}" />
-            <div>
-                <button class="btn btn-success" type="submit">Agregar Receta</button>
-            </div>
+            <input type="hidden" th:field="*{id}" />
+            <button class="btn btn-success" type="submit">Agregar Receta</button>
         </form>
+
+        <div class="card">
+            <div class="card-header">
+                Agregar Ingredientes
+            </div>
+            <div th:if="${ringrediente != null}" class="card-body">
+                <form th:action="@{/insertar_ingrediente_receta}" th:object="${ringrediente}" method="post">
+                    <div class="form-group">
+                        <label for="ingrediente">Ingrediente:</label>
+                        <select class="form-control" id="ingrediente" th:field="*{ingrediente}" required>
+                            <option th:each="ingredientes : ${ingredientesReceta}" th:value="${ingredientes.id}" th:text="${ingredientes.nombre}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad:</label>
+                        <input class="form-control" type="text" id="cantidad" th:field="*{cantidad}" required/>
+                    </div>
+                    <input type="hidden" th:field="*{receta.id}" value="${receta.id}" />
+                    <input type="hidden" th:field="*{id}" />
+                    <button class="btn btn-success" type="submit">Agregar Ingrediente a Receta</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <div th:if="${not #lists.isEmpty(ingredientesRecetaAgregados)}" class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Ingrediente</th>
+                                <th>Cantidad</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="ing : ${ingredientesRecetaAgregados}">
+                                <td th:text="${ing.id}"></td>
+                                <td th:text="${ing.ingrediente.nombre}"></td>
+                                <td th:text="${ing.cantidad}"></td>
+                                <td>
+                                    <a th:href="@{/eliminar_ingrediente_receta/}+${ing.id}" class="btn btn-danger">
+                                        <i class="ti-trash"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

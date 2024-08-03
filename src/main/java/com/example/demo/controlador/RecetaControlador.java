@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.modelo.Calificacion;
 import com.example.demo.modelo.Categoria;
+import com.example.demo.modelo.Ingrediente;
 import com.example.demo.modelo.Receta;
+import com.example.demo.modelo.RecetaIngrediente;
 import com.example.demo.servicios.ICalificacionServicio;
 import com.example.demo.servicios.ICategoriaServicio;
+import com.example.demo.servicios.IIngredienteServicio;
+import com.example.demo.servicios.IRecetaIngredienteServicio;
 import com.example.demo.servicios.IRecetaServicio;
 
 @Controller
@@ -26,6 +30,10 @@ public class RecetaControlador {
 	public IRecetaServicio recetaService;
 	@Autowired
 	public ICalificacionServicio calificacionService;
+	@Autowired
+	public IIngredienteServicio ingredienteServicioService;
+	@Autowired
+	public IRecetaIngredienteServicio recIngServicio;
 	@GetMapping("/listar_receta") 
 	public String listarReceta(Model model) {
 		List<Receta> listarReceta = recetaService.traerTodosMisRecetasPorCalificacion();
@@ -37,7 +45,12 @@ public class RecetaControlador {
 		List<Categoria> listarCategoria = cateService.listarCategoria();
 		List<Receta> listarReceta = recetaService.listarReceta();
 		List<Calificacion> listarCalificacion = calificacionService.listarCalificacion();
+		RecetaIngrediente nuevoRecetaIngrediente = new RecetaIngrediente();
+		List<Ingrediente> listarIngrediente = ingredienteServicioService.listarIngrediente();
 		
+		model.addAttribute("ingredientesReceta", listarIngrediente);
+		model.addAttribute("ringrediente", null);
+
 		model.addAttribute("listarCalificacion", listarCalificacion);
 		model.addAttribute("listarCategoria", listarCategoria);
 		model.addAttribute("listarReceta", listarReceta);
@@ -49,14 +62,28 @@ public class RecetaControlador {
 		recetaService.insertarReceta(nuevoReceta);
 		return "redirect:/listar_receta";
 	}
+	@PostMapping("/insertar_ingrediente_receta")
+	public String guardaringredienteReceta(@ModelAttribute("ringrediente") RecetaIngrediente nuevo) {
+		recIngServicio.insertarRecIngrediente(nuevo);
+		return "redirect:/listar_receta";
+	}
+
+	
 	@GetMapping("/editar_receta/{idreceta}")
 	public String editarReceta(@PathVariable(value="idreceta") int idReceta,Model model ){
 		List<Categoria> listarCategoria = cateService.listarCategoria();
 		model.addAttribute("listarCategoria", listarCategoria);
+		List<RecetaIngrediente> listarIngredienteAgregados = recIngServicio.buscarRecIngredienteId(idReceta);
+		model.addAttribute("ingredientesRecetaAgregados", listarIngredienteAgregados);
 		List<Calificacion> listarCalificacion = calificacionService.listarCalificacion();
+		List<Ingrediente> listarIngrediente = ingredienteServicioService.listarIngrediente();
 		
+		model.addAttribute("ingredientesReceta", listarIngrediente);
 		model.addAttribute("listarCalificacion", listarCalificacion);
 		Receta recetaRecuperado = recetaService.buscarRecetaId(idReceta);
+		RecetaIngrediente nuevoRecetaIngrediente = new RecetaIngrediente();
+	    nuevoRecetaIngrediente.setReceta(recetaRecuperado); 
+		model.addAttribute("ringrediente", nuevoRecetaIngrediente);
 		model.addAttribute("receta", recetaRecuperado);
 		return "receta/nueva";
 	}
@@ -64,6 +91,12 @@ public class RecetaControlador {
 	@GetMapping("/eliminar_receta/{idreceta}")
 	public String eliminarReceta(@PathVariable(value="idreceta") int idReceta) {
 		boolean recetaEliminado = recetaService.eliminarRecetaId(idReceta);
+		return "redirect:/listar_receta";
+		
+	}
+	@GetMapping("/eliminar_ingrediente_receta/{id}")
+	public String eliminarIngrReceta(@PathVariable(value="id") int id) {
+		boolean recetaEliminado = recIngServicio.eliminarRecIngredienteId(id);
 		return "redirect:/listar_receta";
 		
 	}

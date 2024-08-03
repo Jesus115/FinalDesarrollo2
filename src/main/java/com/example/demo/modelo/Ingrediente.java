@@ -1,5 +1,6 @@
 package com.example.demo.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -7,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
@@ -18,6 +20,7 @@ public class Ingrediente {
 
     private String nombre;
 
-    @ManyToMany(mappedBy = "ingredientes")
-    private List<Receta> recetas;
+    
+    @OneToMany(mappedBy = "ingrediente")
+    private List<RecetaIngrediente> detalleIngredientes = new ArrayList<>();
 }

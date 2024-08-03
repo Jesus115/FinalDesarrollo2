@@ -1,5 +1,6 @@
 package com.example.demo.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -35,6 +36,8 @@ public class Receta {
     @ManyToOne
     @JoinColumn(name = "calificaciones_id", nullable = false)
     private Calificacion calificaciones;
+    @OneToMany(mappedBy = "receta")
+    private List<RecetaIngrediente> detalleIngredientes = new ArrayList<>();
 
   
 }
