@@ -34,5 +34,25 @@ public class CalificacionServicioImpl implements ICalificacionServicio {
 		// TODO Auto-generated method stub
 		caliRepo.save(nuevoCalificacion);
 	}
+	@Override
+	public Calificacion bucarCalificacionId(int id) {
+		// TODO Auto-generated method stub
+		return caliRepo.findById(id).get();
+
+	}
+	@Override
+	public boolean eliminarCalificacionId(int id) {
+		// TODO Auto-generated method stub
+		try {
+			caliRepo.deleteById(id);
+			return true;		
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			return false;		
+
+		}
+	}
 
 }

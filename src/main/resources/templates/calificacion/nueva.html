@@ -3,20 +3,20 @@
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 layout:decorate="~{plantilla/plantilla}">
 <head>
-    <title>Agregar Categoria</title>
+    <title>Agregar Calificacion</title>
 </head>
 <body>
     <div layout:fragment="espaciocontenidohtml">
-        <h1>Agregar Nueva Categoria</h1>
-        <form th:action="@{/insertar_categoria}" th:object="${nuevoCategoria}" method="post">
+        <h1>Agregar Nueva Calificacion</h1>
+        <form th:action="@{/insertar_calificacion}" th:object="${nuevoCalificacion}" method="post">
             <div>
-                <label for="titulo">Nombre:</label>
-                <input class="form-control input-sm" type="text" id="titulo" th:field="*{nombre}" required/>
+                <label for="titulo">Puntaje:</label>
+                <input class="form-control input-sm" type="number" id="titulo" th:field="*{puntuacion}" required/>
             </div>
            
              <input class="form-control input-sm" type="hidden"  th:field="*{id}" />
             <div class="pt-5">
-                <button class="btn btn-success" type="submit">Agregar Categoria</button>
+                <button class="btn btn-success" type="submit">Agregar Calificacion</button>
             </div>
         </form>
     </div>

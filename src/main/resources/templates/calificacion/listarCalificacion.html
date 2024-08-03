@@ -6,7 +6,7 @@
 	layout:decorate="~{plantilla/plantilla}"
 >
 <head>
-    <title>Lista Categorias</title>
+    <title>Lista Calificacion</title>
 </head>
 
 <body>
@@ -19,7 +19,7 @@
                    <div class="row align-items-center">
                        <div class="col-md-8">
                            <div class="page-header-title">
-                               <h5 class="m-b-10">Categorias</h5>
+                               <h5 class="m-b-10">Calificacion</h5>
                            </div>
                        </div>
                        
@@ -35,7 +35,7 @@
                                <div class="col-sm-12">
                                    <div class="card">
                                        <div class="card-header">
-                                       <a title="Nuevo categoria" th:href="@{/nuevo_categoria}" class="btn btn-success">
+                                       <a title="Nuevo categoria" th:href="@{/nuevo_calificacion}" class="btn btn-success">
                                        	<i class="fa fa-plus"></i> Nuevo
                                        </a>
                                            
@@ -46,22 +46,22 @@
 										        <thead>
 										            <tr>
 										                <th>#</th>
-										                <th>NOMBRE</th>
+										                <th>Puntaje</th>
 										                <th></th>
 										            </tr>
 										        </thead>
 										        <tbody>
 										            
 										                
-										            <tr th:each="categoria:${lista}">
-										                <td th:text="${categoria.id}"></td>
-										                <td th:text="${categoria.nombre}"></td>
+										            <tr th:each="cali:${lista}">
+										                <td th:text="${cali.id}"></td>
+										                <td th:text="${cali.puntuacion}"></td>
 										                
 										                <td>
-										                	<a th:href="@{/editar_categoria/}+${categoria.id}" class="btn btn-warning">
+										                	<a th:href="@{/editar_calificacion/}+${cali.id}" class="btn btn-warning">
 										                		<i class="fa fa-pencil"></i> Editar
 										                	</a>
-										                	<a th:href="@{/eliminar_categoria/}+${categoria.id}" class="btn btn-danger">
+										                	<a th:href="@{/eliminar_calificacion/}+${cali.id}" class="btn btn-danger">
 										                		<i class="ti-trash"></i> Eliminar
 										                	</a>
 										                </td>

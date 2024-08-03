@@ -11,5 +11,7 @@ import com.example.demo.modelo.Categoria;
 public interface ICalificacionServicio {
 	public List<Calificacion> listarCalificacion();
 	public void insertarCalificacion(Calificacion nuevoCalificacion);
-
+	public Calificacion bucarCalificacionId(int id);
+	public boolean eliminarCalificacionId(int id);
 }
+
